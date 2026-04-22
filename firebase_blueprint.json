@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "Booking": {
+      "title": "Booking",
+      "description": "Wedding and pre-wedding photography bookings",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the user who booked" },
+        "userName": { "type": "string", "description": "Name of the person booking" },
+        "userEmail": { "type": "string", "format": "email" },
+        "cameramanName": { "type": "string", "description": "Assigned cameraman" },
+        "scheduleDate": { "type": "string", "format": "date", "description": "Date of the shoot" },
+        "shootType": { "type": "string", "enum": ["Wedding", "Pre-wedding", "Other"] },
+        "status": { "type": "string", "enum": ["Pending", "Confirmed", "Completed", "Cancelled"] },
+        "paymentStatus": { "type": "string", "enum": ["Unpaid", "Partial", "Paid"] },
+        "advanceAmount": { "type": "number", "description": "Advance paid in INR" },
+        "totalAmount": { "type": "number", "description": "Total contract amount" },
+        "phoneNumber": { "type": "string", "description": "Contact phone number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "scheduleDate", "shootType", "status", "createdAt"]
+    },
+    "GalleryItem": {
+      "title": "Gallery Item",
+      "description": "Photography portfolio items",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "category": { "type": "string", "enum": ["Wedding", "Pre-wedding"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "imageUrl", "category"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Extended user information",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "Video": {
+      "title": "Video",
+      "description": "Cinematic videos for the gallery",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "desc": { "type": "string" },
+        "id": { "type": "string", "description": "YouTube or Instagram ID" },
+        "platform": { "type": "string", "enum": ["youtube", "instagram"] },
+        "views": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "link": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "id", "platform", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Photography booking records"
+    },
+    "/gallery/{itemId}": {
+      "schema": "GalleryItem",
+      "description": "Portfolio items for the website"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile and role information"
+    },
+    "/videos/{videoId}": {
+      "schema": "Video",
+      "description": "Video gallery entries"
+    }
+  }
+}
